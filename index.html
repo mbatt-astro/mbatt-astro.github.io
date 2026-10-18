@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matt Battam — Astrophysics Research</title>
+<meta name="description" content="Research on stellar populations in active galaxy hosts, using integral-field spectroscopy.">
+<meta name="theme-color" content="#05070f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #05070f;
+    --panel: rgba(16, 22, 40, .62);
+    --ink: #e8ebf3;
+    --muted: #9aa3ba;
+    --faint: #5f6884;
+    --line: rgba(140, 160, 210, .16);
+    --gold: #f2b45a;     /* old, metal-rich stars */
+    --blue: #8cb8ff;     /* young, hot stars */
+    --rose: #ff7aa8;     /* H II regions */
+    --max: 900px;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; color: var(--ink); background: var(--void);
+    font: 400 17px/1.7 Inter, system-ui, sans-serif;
+    background-image:
+      radial-gradient(900px 600px at 8% 18%, rgba(88, 70, 190, .14), transparent 70%),
+      radial-gradient(800px 600px at 95% 62%, rgba(190, 70, 130, .09), transparent 70%),
+      radial-gradient(700px 500px at 30% 100%, rgba(40, 110, 190, .12), transparent 70%);
+    background-attachment: fixed;
+  }
+  /* faint fixed starfield behind every section */
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .7;
+    background-image:
+      radial-gradient(1px 1px at 23px 41px, rgba(255,255,255,.75), transparent),
+      radial-gradient(1px 1px at 151px 97px, rgba(255,255,255,.5), transparent),
+      radial-gradient(1.4px 1.4px at 77px 203px, rgba(255,214,160,.7), transparent),
+      radial-gradient(1px 1px at 260px 150px, rgba(255,255,255,.45), transparent),
+      radial-gradient(1.4px 1.4px at 190px 290px, rgba(170,200,255,.75), transparent),
+      radial-gradient(1px 1px at 330px 60px, rgba(255,255,255,.55), transparent);
+    background-size: 280px 280px, 340px 340px, 410px 410px, 370px 370px, 460px 460px, 520px 520px;
+  }
+  a { color: var(--blue); text-underline-offset: 3px; text-decoration-color: rgba(140,184,255,.4); }
+  a:hover { color: var(--gold); text-decoration-color: currentColor; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+
+  /* ---------- nav ---------- */
+  nav { position: sticky; top: 0; z-index: 20; background: rgba(5,7,15,.72);
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; gap: 22px; align-items: center; height: 56px; overflow-x: auto; scrollbar-width: none; }
+  nav .name { display: flex; align-items: center; gap: 9px; font-family: Fraunces, serif; font-weight: 600;
+              margin-right: auto; white-space: nowrap; color: var(--ink); text-decoration: none; }
+  nav .name svg { filter: drop-shadow(0 0 6px rgba(242,180,90,.8)); }
+  nav a.link { color: var(--muted); text-decoration: none; font-size: 14.5px; white-space: nowrap; }
+  nav a.link:hover { color: var(--ink); }
+
+  /* ---------- hero ---------- */
+  header.hero { position: relative; min-height: min(88vh, 760px); display: flex; align-items: center;
+                overflow: hidden; border-bottom: 1px solid var(--line); }
+  #sky { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hero .wrap { position: relative; width: 100%; padding-top: 80px; padding-bottom: 96px; }
+  .hero-text { max-width: 520px; }
+  .eyebrow, .kicker { font-family: var(--mono); font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin: 0 0 16px; }
+  h1, h2, h3 { font-family: Fraunces, serif; font-weight: 600; line-height: 1.18; }
+  h1 { font-size: clamp(36px, 6vw, 58px); margin: 0 0 20px; text-shadow: 0 2px 30px rgba(5,7,15,.9); }
+  h1 em { font-weight: 400; color: var(--gold); }
+  .lede { font-size: 18.5px; color: #c3c9d8; margin: 0 0 30px; text-shadow: 0 1px 16px rgba(5,7,15,.95); }
+  .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-block; padding: 10px 20px; border: 1px solid var(--line); border-radius: 999px;
+         color: var(--ink); text-decoration: none; font-weight: 500; font-size: 15px; background: rgba(10,14,28,.55);
+         transition: border-color .2s, box-shadow .2s; }
+  .btn:hover { color: var(--ink); border-color: var(--gold); box-shadow: 0 0 22px rgba(242,180,90,.25); }
+  .btn.primary { background: linear-gradient(135deg, #f7c877, #e39a3b); border-color: transparent; color: #1b1205; }
+  .btn.primary:hover { color: #1b1205; box-shadow: 0 0 28px rgba(242,180,90,.5); }
+  .legend { position: absolute; right: 20px; bottom: 18px; font-family: var(--mono); font-size: 11.5px; color: var(--faint);
+            display: flex; gap: 16px; flex-wrap: wrap; justify-content: flex-end; left: 20px; }
+  .legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+  .legend .dash { width: 16px; height: 0; border-radius: 0; border-top: 1px dashed var(--gold); vertical-align: 3px; }
+
+  /* ---------- sections ---------- */
+  section { padding: 84px 0; border-bottom: 1px solid var(--line); position: relative; }
+  h2 { font-size: clamp(28px, 4vw, 34px); margin: 0 0 10px; }
+  .sub { color: var(--muted); margin: 0 0 34px; }
+  .kicker::before { content: "✦ "; color: var(--gold); }
+
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .card { border: 1px solid var(--line); border-radius: 14px; padding: 22px; background: var(--panel);
+          backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); transition: border-color .25s, box-shadow .25s, transform .25s; }
+  .card:hover { border-color: rgba(242,180,90,.4); box-shadow: 0 0 34px rgba(242,180,90,.08); transform: translateY(-2px); }
+  .card h3 { font-size: 19px; margin: 0 0 8px; }
+  .card p { margin: 0; color: var(--muted); font-size: 15.5px; }
+  .tag { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em;
+         text-transform: uppercase; margin-bottom: 10px; color: var(--gold); }
+  .tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; box-shadow: 0 0 10px 1px currentColor; }
+  .tag.prog { color: var(--blue); }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 30px 0 0; }
+  .stats div { border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; background: var(--panel); }
+  .stats b { display: block; font-family: Fraunces, serif; font-size: 34px; font-weight: 600; color: var(--gold);
+             line-height: 1.1; text-shadow: 0 0 24px rgba(242,180,90,.35); }
+  .stats span { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: .04em; }
+  @media (max-width: 560px) { .stats { grid-template-columns: 1fr; } }
+  .callout { margin: 28px 0 0; padding: 22px 24px; border-radius: 14px; border: 1px solid rgba(242,180,90,.32);
+             background: linear-gradient(135deg, rgba(242,180,90,.09), rgba(16,22,40,.6) 60%); }
+  .callout.next { border-color: rgba(140,184,255,.3); background: linear-gradient(135deg, rgba(140,184,255,.08), rgba(16,22,40,.6) 60%); }
+  .callout.next .kicker, .callout.next .kicker::before { color: var(--blue); }
+  .callout .kicker { margin-bottom: 8px; }
+  .callout p:last-child { margin: 0; font-size: 17.5px; }
+
+  /* ---------- spectrum figure ---------- */
+  figure.spec { margin: 44px 0 8px; padding: 26px 22px 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); }
+  .spec-title { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 30px; }
+  .spec-band { position: relative; height: 38px; border-radius: 4px;
+    background: linear-gradient(90deg, #2a9cff 0%, #19cfd0 7%, #36db86 14%, #8fe13f 23%, #e3df3c 38%, #ffb12f 48%,
+                #ff6d2b 58%, #ee3b2b 68%, #b41d27 84%, #4d0c16 100%);
+    box-shadow: 0 0 40px rgba(255,170,80,.12); margin-bottom: 30px; }
+  .spec-band::after { content: ""; position: absolute; inset: 0; border-radius: 4px;
+    background: linear-gradient(180deg, rgba(5,7,15,.15), transparent 30%, transparent 70%, rgba(5,7,15,.3)); }
+  .ln { position: absolute; top: 0; bottom: 0; left: var(--x); width: 2px; transform: translateX(-1px); z-index: 1; }
+  .ln.abs { background: rgba(5,7,15,.88); }
+  .ln.em { background: #fff; box-shadow: 0 0 8px 2px rgba(255,255,255,.75); }
+  .ln span { position: absolute; left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: 11px; color: var(--muted); white-space: nowrap; }
+  .ln.abs span { bottom: calc(100% + 6px); }
+  .ln.em span, .ln.below span { top: calc(100% + 6px); }
+  @media (max-width: 480px) { .ln.below span { display: none; } }
+  .spec-axis { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; color: var(--faint); margin-top: -4px; }
+  figure.spec figcaption { margin-top: 16px; color: var(--muted); font-size: 15px; }
+
+  .methods { font-family: var(--mono); font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .methods li { border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; background: rgba(10,14,28,.5); }
+
+  ul.list { list-style: none; padding: 0; margin: 0; }
+  ul.list li { padding: 15px 0 15px 22px; border-top: 1px solid var(--line); position: relative; }
+  ul.list li::before { content: ""; position: absolute; left: 2px; top: 25px; width: 5px; height: 5px; border-radius: 50%;
+                        background: var(--blue); box-shadow: 0 0 8px var(--blue); }
+  ul.list li:first-child { border-top: 0; }
+  ul.list li.empty::before { display: none; }
+  ul.list li.empty { padding-left: 0; }
+  .meta { color: var(--muted); font-size: 14.5px; }
+  .title { font-weight: 600; }
+  .group-label { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase;
+                 color: var(--faint); margin: 38px 0 6px; }
+  .group-label:first-of-type { margin-top: 0; }
+
+  /* ---------- contact ---------- */
+  .contact { display: grid; grid-template-columns: 1fr 190px; gap: 32px; align-items: center; }
+  .crux { width: 100%; max-width: 190px; justify-self: center; }
+  .crux text { font-family: var(--mono); font-size: 9px; fill: var(--faint); }
+  @media (max-width: 640px) { .contact { grid-template-columns: 1fr; } .crux { max-width: 150px; } }
+
+  footer { padding: 40px 0 56px; color: var(--faint); font-size: 14px; font-family: var(--mono); }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="name" href="#top">
+      <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="#f2b45a" d="M12 0c.6 6.6 5.4 11.4 12 12-6.6.6-11.4 5.4-12 12-.6-6.6-5.4-11.4-12-12C6.6 11.4 11.4 6.6 12 0z"/></svg>
+      Matt Battam
+    </a>
+    <a class="link" href="#research">Research</a>
+    <a class="link" href="#publications">Publications</a>
+    <a class="link" href="#links">Further reading</a>
+    <a class="link" href="#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="hero-text">
+      <p class="eyebrow">Astrophysics · University of Southern Queensland</p>
+      <h1>How do black holes shape the <em>galaxies</em> around them?</h1>
+      <p class="lede">I look for the fingerprints of supermassive black holes in the stars of their host galaxies, using integral field spectroscopy from the Very Large Telescope.</p>
+      <div class="btns">
+        <a class="btn primary" href="#research">Explore the research</a>
+        <a class="btn" href="#contact">Get in touch</a>
+      </div>
+    </div>
+  </div>
+  <div class="legend" aria-hidden="true">
+    <span><i style="background:#f2b45a;box-shadow:0 0 6px #f2b45a"></i>older stars</span>
+    <span><i style="background:#8cb8ff;box-shadow:0 0 6px #8cb8ff"></i>younger stars</span>
+    <span><i style="background:#ff7aa8;box-shadow:0 0 6px #ff7aa8"></i>star-forming regions</span>
+    <span><i class="dash"></i>elliptical annuli</span>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <p class="kicker">01 — About</p>
+    <h2>About</h2>
+    <p>I'm a Master's researcher in astrophysics at UniSQ, moving into a PhD from 2027. My work sits where galaxy evolution meets active galactic nuclei (AGN): if the energy pouring out of a growing black hole affects star formation in its host, that history should be written into the ages and metallicities of the host's stars.</p>
+    <p>I came to astronomy the way a lot of people do — by looking up. I still do plenty of that.</p>
+  </div>
+</section>
+
+<section id="research">
+  <div class="wrap">
+    <p class="kicker">02 — Research</p>
+    <h2>How do supermassive black holes shape the galaxies around them?</h2>
+    <p class="sub">Reading a galaxy's history in the light of its stars.</p>
+
+    <p>Almost every large galaxy has a supermassive black hole at its centre. When gas falls onto it, the black hole lights up as an active galactic nucleus (AGN), one of the brightest objects in the Universe. Theory says the energy from AGN should heat or blow away gas and shut down star formation in their host galaxies. Direct evidence of this in real galaxies, however, is still hard to find.</p>
+
+    <p>My master's research at the University of Southern Queensland looks for that evidence in the galaxies' stars. Using integral field spectroscopy from the Very Large Telescope's <a href="https://www.eso.org/sci/facilities/develop/instruments/muse.html" target="_blank" rel="noopener">MUSE</a> instrument, I mapped stellar ages and chemical compositions across 32 nearby galaxies with bright, unobscured AGN from the <a href="https://www.cars-survey.org" target="_blank" rel="noopener">Close AGN Reference Survey (CARS)</a>. I compared them with 46 carefully matched galaxies whose black holes are quiet.</p>
+
+    <div class="stats">
+      <div><b>32</b><span>AGN host galaxies</span></div>
+      <div><b>46</b><span>matched quiet galaxies</span></div>
+      <div><b>VLT</b><span>MUSE integral field spectroscopy</span></div>
+    </div>
+
+    <figure class="spec">
+      <p class="spec-title">The light I fit · 4800–7400 Å</p>
+      <div class="spec-band" role="img" aria-label="Optical spectrum from 4800 to 7400 Ångströms with absorption lines H-beta, magnesium b, iron 5270, sodium D and H-alpha, and the oxygen-III emission line">
+        <div class="ln abs" style="--x:2.3%"><span>Hβ</span></div>
+        <div class="ln em" style="--x:8%"><span>[O III]</span></div>
+        <div class="ln abs" style="--x:14.4%"><span>Mg b</span></div>
+        <div class="ln abs below" style="--x:18.1%"><span>Fe</span></div>
+        <div class="ln abs" style="--x:42%"><span>Na D</span></div>
+        <div class="ln abs" style="--x:67.8%"><span>Hα</span></div>
+      </div>
+      <div class="spec-axis"><span>4800 Å</span><span>6100 Å</span><span>7400 Å</span></div>
+      <figcaption>Dark lines are light absorbed in the atmospheres of stars, and how deep they are tells you the age and chemical make-up of the stellar population. Bright lines such as [O III] come from gas lit up by the black hole, so they're modelled and removed first.</figcaption>
+    </figure>
+
+    <div class="callout">
+      <p class="kicker">What I found</p>
+      <p>The AGN host galaxies show no sign that their black holes are shutting down star formation. Instead, their centres are younger relative to their outer regions than those of quiet galaxies. This points to a shared gas supply that fuels both the black hole and new stars. It suggests the AGN we see today have not yet been active long enough to leave a lasting mark. Each AGN shines brightly for only a brief part of its life, while stars record billions of years of history.</p>
+    </div>
+
+    <div class="callout next">
+      <p class="kicker">What's next</p>
+      <p>I'm supervised by Dr Rebecca McElroy, and I plan to continue this work as a PhD. That work will combine multiple telescopes and wavelengths to trace when, and whether, black holes switch galaxies off.</p>
+    </div>
+
+    <h3 class="group-label" style="margin-top:44px">Methods &amp; tools</h3>
+    <ul class="methods">
+      <li>MUSE IFU spectroscopy</li><li>nGIST / pPXF</li><li>MILES SSP templates</li>
+      <li>Voronoi binning</li><li>Elliptical annuli</li><li>BPT diagnostics</li><li>GALFIT</li>
+    </ul>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="wrap">
+    <p class="kicker">03 — Output</p>
+    <h2>Publications &amp; talks</h2>
+    <p class="sub">Papers, posters and presentations.</p>
+
+    <h3 class="group-label">Theses</h3>
+    <ul class="list">
+      <li>
+        <div class="title">Stellar population gradients in Type 1 AGN host galaxies</div>
+        <div class="meta">Master's thesis, University of Southern Queensland · in preparation, 2026</div>
+      </li>
+    </ul>
+
+    <h3 class="group-label">Talks &amp; posters</h3>
+    <ul class="list">
+      <!-- Copy this block for each talk:
+      <li>
+        <div class="title"><a href="LINK">Talk title</a></div>
+        <div class="meta">Conference or seminar name · City · Month Year</div>
+      </li>
+      -->
+      <li class="empty"><div class="meta">Coming soon.</div></li>
+    </ul>
+
+    </div>
+  </div>
+</section>
+
+<section id="links">
+  <div class="wrap">
+    <p class="kicker">04 — Further reading</p>
+    <h2>Further reading</h2>
+    <p class="sub">Work by others that my research builds on, plus good places to explore.</p>
+
+    <h3 class="group-label">Surveys &amp; data</h3>
+    <ul class="list">
+      <li>
+        <div class="title"><a href="https://www.cars-survey.org" target="_blank" rel="noopener">Close AGN Reference Survey (CARS)</a></div>
+        <div class="meta">Husemann et al. (2022) — multi-wavelength survey of nearby luminous Type 1 AGN; the core dataset for my work.</div>
+      </li>
+      <li>
+        <div class="title"><a href="https://www.eso.org/sci/facilities/develop/instruments/muse.html" target="_blank" rel="noopener">MUSE on the VLT</a></div>
+        <div class="meta">ESO's integral-field spectrograph — a spectrum for every pixel.</div>
+      </li>
+    </ul>
+
+    <h3 class="group-label">Software</h3>
+    <ul class="list">
+      <li>
+        <div class="title"><a href="https://github.com/geckos-survey/ngist" target="_blank" rel="noopener">nGIST</a></div>
+        <div class="meta">Fraser-McKelvie et al. (2025) — pipeline for analysing IFU galaxy spectra.</div>
+      </li>
+      <li>
+        <div class="title"><a href="https://pypi.org/project/ppxf/" target="_blank" rel="noopener">pPXF</a></div>
+        <div class="meta">Cappellari — penalised pixel-fitting for stellar kinematics and populations.</div>
+      </li>
+      <li>
+        <div class="title"><a href="http://miles.iac.es" target="_blank" rel="noopener">MILES stellar library</a></div>
+        <div class="meta">Empirical stellar spectra and population synthesis models.</div>
+      </li>
+    </ul>
+
+    <h3 class="group-label">Key papers</h3>
+    <ul class="list">
+      <li>
+        <div class="title">Goddard et al. (2017)</div>
+        <div class="meta">Stellar population gradients in MaNGA galaxies.</div>
+      </li>
+      <li>
+        <div class="title">Kuntschner et al. (2010)</div>
+        <div class="meta">SAURON view of stellar population gradients in early-type galaxies.</div>
+      </li>
+    </ul>
+
+    <h3 class="group-label">Explore astronomy</h3>
+    <ul class="list">
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu" target="_blank" rel="noopener">NASA ADS</a> · <a href="https://arxiv.org/list/astro-ph.GA/new" target="_blank" rel="noopener">arXiv astro-ph.GA</a></div>
+        <div class="meta">Where to find the latest galaxy research.</div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap contact">
+    <div>
+      <p class="kicker">05 — Contact</p>
+      <h2>Say hello</h2>
+      <p>Interested in AGN, galaxy evolution or IFU spectroscopy? I'm always happy to talk.</p>
+      <div class="btns">
+        <a class="btn primary" href="mailto:YOUR-EMAIL-HERE">Email</a>
+        <a class="btn" href="https://github.com/mbatt-astro" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://orcid.org/YOUR-ORCID" target="_blank" rel="noopener">ORCID</a>
+      </div>
+    </div>
+    <!-- Crux, the Southern Cross — positions from real RA/Dec, north up -->
+    <svg class="crux" viewBox="0 0 200 230" role="img" aria-label="The Southern Cross constellation">
+      <defs>
+        <radialGradient id="sg"><stop offset="0" stop-color="#fff"/><stop offset=".4" stop-color="#cfe0ff"/><stop offset="1" stop-color="#cfe0ff" stop-opacity="0"/></radialGradient>
+        <radialGradient id="sr"><stop offset="0" stop-color="#fff"/><stop offset=".4" stop-color="#ffb978"/><stop offset="1" stop-color="#ffb978" stop-opacity="0"/></radialGradient>
+      </defs>
+      <g stroke="rgba(140,184,255,.28)" stroke-width="1">
+        <line x1="95.5" y1="23" x2="113.5" y2="203"/>
+        <line x1="34" y1="101" x2="156" y2="72.5"/>
+      </g>
+      <circle cx="113.5" cy="203" r="12" fill="url(#sg)"/>
+      <circle cx="34" cy="101" r="11" fill="url(#sg)"/>
+      <circle cx="95.5" cy="23" r="10" fill="url(#sr)"/>
+      <circle cx="156" cy="72.5" r="7" fill="url(#sg)"/>
+      <circle cx="131.5" cy="122" r="5" fill="url(#sg)"/>
+      <text x="124" y="207">Acrux</text>
+      <text x="12" y="122">Mimosa</text>
+      <text x="106" y="27">Gacrux</text>
+    </svg>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr"></span> Matt Battam</span>
+    <span>Clear skies ✦</span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* Hero sky: twinkling stars, an occasional meteor, and a slowly rotating
+   spiral galaxy coloured by stellar age (gold core → blue outskirts),
+   overlaid with the elliptical annuli used to bin real galaxies. */
+(() => {
+  const c = document.getElementById('sky'), x = c.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W, H, stars = [], gal = [], G = {}, rot = 0, meteor = null, running = true;
+  const rand = (a, b) => a + Math.random() * (b - a);
+  const gauss = () => { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+  const mix = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+  const GOLD = [255, 192, 115], CREAM = [255, 236, 212], BLUE = [140, 180, 255], PINK = [255, 122, 168];
+  const colorAt = f => f < .35 ? mix(GOLD, CREAM, f / .35) : mix(CREAM, BLUE, Math.min(1, (f - .35) / .65));
+  const rgba = (col) => `rgba(${col.map(Math.round).join(',')},`;
+
+  function buildGalaxy() {
+    gal = [];
+    const N = W < 760 ? 1700 : 2800, pitch = Math.tan(0.40), r0 = 0.08;
+    for (let i = 0; i < N; i++) {
+      const k = Math.random(); let r, th, s, col, a;
+      if (k < .18) {                         // bulge
+        r = Math.abs(gauss()) * .11; th = rand(0, 6.283); col = GOLD; s = rand(.6, 1.4); a = rand(.35, .8);
+      } else if (k < .82) {                  // two logarithmic spiral arms
+        r = r0 + Math.pow(Math.random(), .8) * (1 - r0);
+        th = (Math.random() < .5 ? 0 : Math.PI) + Math.log(r / r0) / pitch + gauss() * .26 * (1 - r * .4);
+        col = colorAt(r); s = rand(.5, 1.5); a = rand(.25, .85);
+        if (r > .3 && Math.random() < .06) { col = PINK; s = rand(1.2, 2.2); a = .9; }
+      } else {                               // diffuse disc
+        r = Math.pow(Math.random(), .6); th = rand(0, 6.283); col = colorAt(r); s = rand(.4, 1); a = rand(.1, .35);
+      }
+      gal.push({ r, th, s, c: rgba(col), a });
+    }
+  }
+
+  function layout() {
+    const dpr = Math.min(devicePixelRatio || 1, 2), rect = c.getBoundingClientRect();
+    W = rect.width; H = rect.height; c.width = W * dpr; c.height = H * dpr; x.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const mobile = W < 760;
+    G = mobile
+      ? { cx: W * .72, cy: H * .2, R: W * .5, q: .52, pa: -.45, alpha: .42 }
+      : { cx: W * .74, cy: H * .48, R: Math.min(W * .3, H * .5), q: .52, pa: -.45, alpha: 1 };
+    stars = Array.from({ length: Math.round(W * H / 4200) }, () => ({
+      x: rand(0, W), y: rand(0, H), s: Math.random() < .92 ? rand(.3, 1.1) : rand(1.1, 1.9),
+      p: rand(0, 6.28), v: rand(.4, 2),
+      c: Math.random() < .85 ? '255,255,255' : (Math.random() < .5 ? '255,210,160' : '170,200,255')
+    }));
+    buildGalaxy();
+  }
+
+  function draw(now) {
+    const t = now / 1000;
+    x.clearRect(0, 0, W, H);
+    for (const s of stars) {
+      const tw = reduce ? .8 : .55 + .45 * Math.sin(t * s.v + s.p);
+      x.fillStyle = `rgba(${s.c},${tw * .9})`; x.fillRect(s.x, s.y, s.s, s.s);
+    }
+    const { cx, cy, R, q, pa, alpha } = G, cp = Math.cos(pa), sp = Math.sin(pa);
+    x.save(); x.globalAlpha = alpha;
+    // central glow
+    x.save(); x.translate(cx, cy); x.rotate(pa); x.scale(1, q);
+    const g = x.createRadialGradient(0, 0, 0, 0, 0, R * .5);
+    g.addColorStop(0, 'rgba(255,214,150,.6)'); g.addColorStop(.25, 'rgba(255,190,120,.2)'); g.addColorStop(1, 'rgba(255,190,120,0)');
+    x.fillStyle = g; x.beginPath(); x.arc(0, 0, R * .5, 0, 6.283); x.fill(); x.restore();
+    // stars of the galaxy
+    x.globalCompositeOperation = 'lighter';
+    for (const p of gal) {
+      const th = p.th + rot, lx = p.r * R * Math.cos(th), ly = p.r * R * Math.sin(th) * q;
+      x.fillStyle = p.c + p.a + ')'; x.fillRect(cx + lx * cp - ly * sp, cy + lx * sp + ly * cp, p.s, p.s);
+    }
+    x.globalCompositeOperation = 'source-over';
+    // elliptical annuli
+    x.setLineDash([3, 5]); x.lineWidth = 1; x.strokeStyle = 'rgba(242,180,90,.38)';
+    for (const f of [.22, .46, .72, 1.0]) { x.beginPath(); x.ellipse(cx, cy, R * f, R * f * q, pa, 0, 6.283); x.stroke(); }
+    x.setLineDash([]); x.restore();
+    // meteor
+    if (!reduce && !meteor && Math.random() < .0025)
+      meteor = { x: rand(W * .05, W * .6), y: rand(0, H * .35), t: 0, a: rand(.3, .6), len: rand(90, 170) };
+    if (meteor) {
+      meteor.t += 1 / 60;
+      const d = meteor.t * 650, hx = meteor.x + Math.cos(meteor.a) * d, hy = meteor.y + Math.sin(meteor.a) * d;
+      const tx = hx - Math.cos(meteor.a) * meteor.len, ty = hy - Math.sin(meteor.a) * meteor.len;
+      const lg = x.createLinearGradient(tx, ty, hx, hy), f = Math.max(0, 1 - meteor.t / .9);
+      lg.addColorStop(0, 'rgba(255,255,255,0)'); lg.addColorStop(1, `rgba(255,255,255,${.85 * f})`);
+      x.strokeStyle = lg; x.lineWidth = 1.3; x.beginPath(); x.moveTo(tx, ty); x.lineTo(hx, hy); x.stroke();
+      if (meteor.t > .9) meteor = null;
+    }
+  }
+
+  function loop(now) { if (!running) return; rot += .0007; draw(now); requestAnimationFrame(loop); }
+
+  layout();
+  if (reduce) draw(0);
+  else {
+    requestAnimationFrame(loop);
+    new IntersectionObserver(([e]) => {
+      const was = running; running = e.isIntersecting; if (running && !was) requestAnimationFrame(loop);
+    }).observe(c);
+  }
+  let to; addEventListener('resize', () => { clearTimeout(to); to = setTimeout(() => { layout(); if (reduce) draw(0); }, 150); });
+})();
+</script>
+</body>
+</html>
