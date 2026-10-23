@@ -149,6 +149,9 @@
                  color: var(--faint); margin: 38px 0 6px; }
   .group-label:first-of-type { margin-top: 0; }
 
+  .subgroup { font-family: Fraunces, serif; font-weight: 600; font-size: 18px; color: var(--ink); margin: 26px 0 4px; }
+  .group-label + .subgroup { margin-top: 8px; }
+
   /* ---------- contact ---------- */
   .contact { display: grid; grid-template-columns: 1fr 190px; gap: 32px; align-items: center; }
   .crux { width: 100%; max-width: 190px; justify-self: center; }
@@ -321,15 +324,111 @@
       </li>
     </ul>
 
-    <h3 class="group-label">Key papers</h3>
+    <h3 class="group-label">Papers this work builds on</h3>
+    <h4 class="subgroup">Why it matters: AGN feedback and the AGN duty cycle</h4>
     <ul class="list">
       <li>
-        <div class="title">Goddard et al. (2017)</div>
-        <div class="meta">Stellar population gradients in MaNGA galaxies.</div>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1146/annurev-astro-081811-125521/abstract" target="_blank" rel="noopener">Observational evidence of AGN feedback</a></div>
+        <div class="meta">Fabian (2012) · ARA&amp;A 50, 455 — The classic review of how black holes can heat gas and regulate galaxy growth.</div>
       </li>
       <li>
-        <div class="title">Kuntschner et al. (2010)</div>
-        <div class="meta">SAURON view of stellar population gradients in early-type galaxies.</div>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/arXiv:1703.06889/abstract" target="_blank" rel="noopener">Impact of supermassive black hole growth on star formation</a></div>
+        <div class="meta">Harrison (2017) · Nature Astronomy 1, 0165 — Why direct evidence of AGN shutting down star formation has been so hard to pin down.</div>
+      </li>
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1088/0004-637X/782/1/9/abstract" target="_blank" rel="noopener">Black hole variability and the star formation–AGN connection</a></div>
+        <div class="meta">Hickox et al. (2014) · ApJ 782, 9 — AGN brightness changes far faster than star formation, which blurs any link between the two.</div>
+      </li>
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/arXiv:1505.06733/abstract" target="_blank" rel="noopener">Active galactic nuclei flicker: black hole growth phases of ~10⁵ years</a></div>
+        <div class="meta">Schawinski et al. (2015) · MNRAS 451, 2517 — Evidence that individual AGN phases are short-lived compared with stellar histories.</div>
+      </li>
+    </ul>
+    <h4 class="subgroup">Data</h4>
+    <ul class="list">
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1051/0004-6361/202141312/abstract" target="_blank" rel="noopener">The Close AGN Reference Survey (CARS): IFU survey data and the BH mass dependence of long-term AGN variability</a></div>
+        <div class="meta">Husemann et al. (2022) · A&amp;A 659, A124 — The CARS data release — the MUSE cubes of the AGN hosts in my sample.</div>
+      </li>
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1117/12.856027/abstract" target="_blank" rel="noopener">The MUSE second-generation VLT instrument</a></div>
+        <div class="meta">Bacon et al. (2010) · Proc. SPIE 7735 — The integral field spectrograph behind the data.</div>
+      </li>
+    </ul>
+    <h4 class="subgroup">Separating the AGN from its host</h4>
+    <ul class="list">
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1051/0004-6361/201220076/abstract" target="_blank" rel="noopener">The properties of the extended warm ionised gas around low-redshift QSOs</a></div>
+        <div class="meta">Husemann et al. (2013) · A&amp;A 549, A43 — Deblending the bright nucleus from the host galaxy light in integral field data.</div>
+      </li>
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1088/0004-6256/139/6/2097/abstract" target="_blank" rel="noopener">Detailed decomposition of galaxy images II: beyond axisymmetric models (GALFIT)</a></div>
+        <div class="meta">Peng et al. (2010) · AJ 139, 2097 — Fitting galaxy shapes and sizes, used for each galaxy's effective radius and orientation.</div>
+      </li>
+    </ul>
+    <h4 class="subgroup">Fitting the spectra</h4>
+    <ul class="list">
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1086/381875/abstract" target="_blank" rel="noopener">Parametric recovery of line-of-sight velocity distributions (pPXF)</a></div>
+        <div class="meta">Cappellari &amp; Emsellem (2004) · PASP 116, 138 — The original penalised pixel-fitting method.</div>
+      </li>
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1093/mnras/stw3020/abstract" target="_blank" rel="noopener">Improving the full spectrum fitting method</a></div>
+        <div class="meta">Cappellari (2017) · MNRAS 466, 798 — The modern pPXF, including regularised stellar population fits.</div>
+      </li>
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1093/mnras/stad2597/abstract" target="_blank" rel="noopener">Full spectrum fitting with photometry in pPXF</a></div>
+        <div class="meta">Cappellari (2023) · MNRAS 526, 3273 — The current version of pPXF and its approach to stellar populations.</div>
+      </li>
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1111/j.1365-2966.2006.10699.x/abstract" target="_blank" rel="noopener">MILES: a medium-resolution INT library of empirical spectra</a></div>
+        <div class="meta">Sánchez-Blázquez et al. (2006) · MNRAS 371, 703 — The library of real stellar spectra underpinning the templates.</div>
+      </li>
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1111/j.1365-2966.2010.16407.x/abstract" target="_blank" rel="noopener">Evolutionary stellar population synthesis with MILES I</a></div>
+        <div class="meta">Vazdekis et al. (2010) · MNRAS 404, 1639 — Turning the MILES stars into model stellar populations.</div>
+      </li>
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1093/mnras/stv151/abstract" target="_blank" rel="noopener">Evolutionary stellar population synthesis with MILES II</a></div>
+        <div class="meta">Vazdekis et al. (2015) · MNRAS 449, 1177 — The BaSTI-based models used as fitting templates.</div>
+      </li>
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1046/j.1365-8711.2003.06541.x/abstract" target="_blank" rel="noopener">Adaptive spatial binning of integral-field spectroscopic data using Voronoi tessellations</a></div>
+        <div class="meta">Cappellari &amp; Copin (2003) · MNRAS 342, 345 — Grouping pixels until each spectrum has enough signal to fit.</div>
+      </li>
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1051/0004-6361/201935829/abstract" target="_blank" rel="noopener">The GIST pipeline</a></div>
+        <div class="meta">Bittner et al. (2019) · A&amp;A 628, A117 — The analysis framework that nGIST grew from.</div>
+      </li>
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1051/0004-6361/202452891/abstract" target="_blank" rel="noopener">The GECKOS survey: kinematic sub-structures in edge-on galaxies (introducing nGIST)</a></div>
+        <div class="meta">Fraser-McKelvie et al. (2025) · A&amp;A — Presents nGIST, the pipeline used for all fits in this work.</div>
+      </li>
+    </ul>
+    <h4 class="subgroup">Stellar population gradients</h4>
+    <ul class="list">
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1111/j.1365-2966.2010.17161.x/abstract" target="_blank" rel="noopener">The SAURON project XVII: stellar population analysis of 48 early-type galaxies</a></div>
+        <div class="meta">Kuntschner et al. (2010) · MNRAS 408, 97 — A benchmark for measuring how age and metallicity change with radius.</div>
+      </li>
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1093/mnras/stw2719/abstract" target="_blank" rel="noopener">SDSS-IV MaNGA: stellar population gradients as a function of galaxy environment</a></div>
+        <div class="meta">Goddard et al. (2017) · MNRAS 465, 688 — Gradient conventions for large IFU samples, which this work follows.</div>
+      </li>
+    </ul>
+    <h4 class="subgroup">Emission-line diagnostics</h4>
+    <ul class="list">
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1086/130766/abstract" target="_blank" rel="noopener">Classification parameters for the emission-line spectra of extragalactic objects</a></div>
+        <div class="meta">Baldwin, Phillips &amp; Terlevich (1981) · PASP 93, 5 — The BPT diagram: telling AGN-lit gas from star-forming gas.</div>
+      </li>
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1086/321545/abstract" target="_blank" rel="noopener">Theoretical modeling of starburst galaxies</a></div>
+        <div class="meta">Kewley et al. (2001) · ApJ 556, 121 — The theoretical upper limit for star formation on the BPT diagram.</div>
+      </li>
+      <li>
+        <div class="title"><a href="https://ui.adsabs.harvard.edu/abs/10.1111/j.1365-2966.2003.07154.x/abstract" target="_blank" rel="noopener">The host galaxies of AGN</a></div>
+        <div class="meta">Kauffmann et al. (2003) · MNRAS 346, 1055 — The empirical star-forming boundary on the BPT diagram, and a landmark study of AGN hosts.</div>
       </li>
     </ul>
 
